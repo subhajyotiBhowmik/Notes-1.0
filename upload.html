@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload File</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+        }
+        h1 {
+            text-align: center;
+            margin-top: 50px;
+        }
+        form {
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        label, select, input[type="file"], button {
+            display: block;
+            margin-bottom: 20px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        select, input[type="file"] {
+            height: 40px;
+        }
+        button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        a {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #007bff;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h1>Upload File</h1>
+    <form action="{{ url_for('upload_file') }}" method="post" enctype="multipart/form-data">
+        <label for="file">Select File:</label>
+        <input type="file" id="file" name="file" accept=".pdf,.txt,.doc,.docx">
+        <label for="section">Select Section:</label>
+        <select id="section" name="section">
+            <option value="operating_system">Operating System</option>
+            <option value="computer_networks">Computer Networks</option>
+            <option value="data_structures">Data Structures</option>
+            <option value="Automata Theory">Automata Theory</option>
+            <option value="c_programming">C programming</option>
+            <option value="c++-programming">C++ programming</option>
+            <!-- Add more options as needed -->
+        </select>
+        <button type="submit">Upload</button>
+    </form>
+    <a href="{{ url_for('index') }}">Back to Files</a>
+</body>
+</html>

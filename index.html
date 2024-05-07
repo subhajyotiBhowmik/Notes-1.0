@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - Your App Name</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+        nav ul li {
+            float: left;
+        }
+        nav ul li a {
+            display: block;
+            color: #fff;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+        nav ul li a:hover {
+            background-color: #555;
+        }
+        main {
+            margin: 20px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            margin-top: 20px;
+            font-size: 24px;
+            border-bottom: 2px solid #333;
+            padding-bottom: 10px;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            margin-bottom: 10px;
+        }
+        a {
+            text-decoration: none;
+            color: #007bff;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        .dropbtn {
+            background-color: #4CAF50;
+            color: white;
+            padding: 16px;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+        }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+        .dropdown-content a:hover {
+            background-color: #f1f1f1;
+        }
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+        .dropdown:hover .dropbtn {
+            background-color: #3e8e41;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Welcome, {{ username }}</h1>
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('index') }}">Home</a></li>
+                <li><a href="{{ url_for('upload_file') }}">Upload</a></li>
+                <li><a href="{{ url_for('profile') }}">Profile</a></li>
+                <li><a href="{{ url_for('logout') }}">Logout</a></li>
+                <li><a href="{{ url_for('request_notes') }}">Request Notes</a></li> <!-- Added request notes link -->
+                <li><a href="{{ url_for('contact_us') }}">Contact Us</a></li> <!-- New link for contacting -->
+                <li><a href="{{ url_for('nearby') }}" onclick="getLocation()">Nearby</a></li> <!-- New link for contacting -->
+
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <h2>Uploaded Files</h2>
+        {% if uploaded %}
+        <p>File uploaded successfully!</p>
+        {% endif %}
+        <ul>
+            {% for file in files %}
+            <li>
+                <a href="{{ url_for('download_uploaded_file', filename=file.filename) }}">{{ file.filename }}</a>
+                <span>Rating: {{ file.rating }}</span>
+            </li>
+            {% endfor %}
+        </ul>
+        <div class="dropdown">
+            <button class="dropbtn">Sections</button>
+            <div class="dropdown-content">
+                <a href="#os-section">Operating System</a>
+                <a href="#networks-section">Computer Networks</a>
+                <a href="#data-structures-section">Data Structures</a>
+                <a href="#c-programming">C programming</a>
+                <a href="#python-programming">Python Programming</a>
+                <a href="#c++-programming">c++ Programming</a>
+                <a href="#java-programming">Java Programming</a>
+                <!-- Add more sections as needed -->
+            </div>
+        </div>
+        <ul>
+            <li id="os-section">
+                <h2>Operating System Notes</h2>
+                <ul>
+                    {% for file in files %}
+                        {% if file['section'] == 'operating_system' %}
+                            <li>
+                                <a href="{{ url_for('download_uploaded_file', filename=file['filename']) }}">{{ file['filename'] }}</a>
+                                <span>Rating: {{ file['rating'] }}</span>
+                                <!-- Add rating stars here -->
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            </li>
+            <li id="networks-section">
+                <h2>Computer Networks Notes</h2>
+                <ul>
+                    {% for file in files %}
+                        {% if file['section'] == 'computer_networks' %}
+                            <li>
+                                <a href="{{ url_for('download_uploaded_file', filename=file['filename']) }}">{{ file['filename'] }}</a>
+                                <span>Rating: {{ file['rating'] }}</span>
+                                <!-- Add rating stars here -->
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            </li>
+            <li id="data-structures-section">
+                <h2>Data Structures Notes</h2>
+                <ul>
+                    {% for file in files %}
+                        {% if file['section'] == 'data_structures' %}
+                            <li>
+                                <a href="{{ url_for('download_uploaded_file', filename=file['filename']) }}">{{ file['filename'] }}</a>
+                                <span>Rating: {{ file['rating'] }}</span>
+                                <!-- Add rating stars here -->
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+                <li id="c-programming">
+                      <h2>C Programming</h2>
+            <ul>
+                    {% for file in files %}
+                        {% if file['section'] == 'c_programming' %}
+                            <li>
+                                <a href="{{ url_for('download_uploaded_file', filename=file['filename']) }}">{{ file['filename'] }}</a>
+                                <span>Rating: {{ file['rating'] }}</span>
+                                <!-- Add rating stars here -->
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+
+            <li id="c++-programming">
+                      <h2>C++ Programming</h2>
+            <ul>
+                    {% for file in files %}
+                        {% if file['section'] == 'c++-programming' %}
+                            <li>
+                                <a href="{{ url_for('download_uploaded_file', filename=file['filename']) }}">{{ file['filename'] }}</a>
+                                <span>Rating: {{ file['rating'] }}</span>
+                                <!-- Add rating stars here -->
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+
+
+            </li>
+            <!-- Add more sections as needed -->
+        </ul>
+    </main>
+</body>
+</html>

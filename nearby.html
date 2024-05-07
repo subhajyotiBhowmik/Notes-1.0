@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nearby Colleges and Tutors</title>
+    <style>
+        /* Your existing styles here */
+    </style>
+</head>
+<body>
+    <header>
+        <!-- Your existing header content -->
+    </header>
+    <main>
+        <h2>Nearby Colleges</h2>
+        <ul id="nearbyColleges"></ul>
+
+        <h2>Nearby Tutors</h2>
+        <ul id="nearbyTutors"></ul>
+        <div id="loading">Loading...</div>
+    </main>
+
+    <script>
+        function fetchNearbyColleges(latitude, longitude) {
+            const collegesList = document.getElementById('nearbyColleges');
+            const loadingIndicator = document.getElementById('loading');
+            loadingIndicator.style.display = 'block';
+            collegesList.innerHTML = '';
+
+            // Replace YOUR_API_KEY with your actual Google Places API key
+            const apiKey = 'AIzaSyDPmXJTd6GQw5oMjs9XNGymigFaSskhMbQ';
+            const radius = 10000; // Radius in meters (adjust as needed)
+            const type = 'university'; // Type can be 'university', 'college', etc.
+
+            fetch(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latitude},${longitude}&radius=${radius}&type=${type}&key=${apiKey}`)
+                .then(response => response.json())
+                .then(data => {
+                    data.results.forEach(college => {
+                        const collegeItem = document.createElement('li');
+                        collegeItem.textContent = college.name;
+                        collegesList.appendChild(collegeItem);
+                    });
+                    loadingIndicator.style.display = 'none';
+                })
+                .catch(error => {
+                    console.error('Error fetching nearby colleges:', error);
+                    loadingIndicator.style.display = 'none';
+                    alert('Failed to fetch nearby colleges. Please try again later.');
+                });
+        }
+
+        function getLocationSuccess(position) {
+            const latitude = position.coords.latitude;
+            const longitude = position.coords.longitude;
+            fetchNearbyColleges(latitude, longitude);
+        }
+
+        function getLocationError(error) {
+            console.error('Error getting user location:', error);
+            alert('Failed to get your location. Please make sure location services are enabled and try again.');
+        }
+
+        function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(getLocationSuccess, getLocationError);
+            } else {
+                console.error('Geolocation is not supported by this browser.');
+                alert('Geolocation is not supported by this browser.');
+            }
+        }
+
+        window.onload = getLocation;
+    </script>
+</body>
+</html>

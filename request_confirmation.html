@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Request Confirmation</title>
+    <style>
+        /* Success animation */
+        @keyframes success {
+            0% {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Burst animation */
+        @keyframes burst {
+            0% {
+                transform: scale(0);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.2);
+                opacity: 0.5;
+            }
+            100% {
+                transform: scale(1.5);
+                opacity: 0;
+            }
+        }
+
+        /* Styles for burst effect */
+
+
+        /* Styles for success animation */
+        .success-message {
+            animation: success 0.5s ease-out;
+            font-family: Arial, sans-serif; /* Change font family here */
+            color: #4CAF50; /* Change text color */
+            font-size: 24px; /* Change font size */
+            text-align: center; /* Center text */
+            margin-bottom: 10px; /* Add some space between elements */
+        }
+
+        /* Centering elements */
+        body, html {
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            margin: 0;
+            background-color: #f4f4f4; /* Change background color */
+            font-family: Arial, sans-serif; /* Change font family here */
+        }
+    </style>
+</head>
+<body>
+    <h1 class="success-message">Request Submitted</h1>
+    <p>Thank you for your request! We have received it and will review it shortly.</p>
+    <div class="burst"></div>
+</body>
+</html>

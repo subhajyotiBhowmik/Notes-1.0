@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - Your App Name</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f5f5f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 800px;
+            width: 90%;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+        header {
+            text-align: center;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #ccc;
+            margin-bottom: 20px;
+        }
+        h1 {
+            color: #333;
+        }
+        main {
+            padding: 20px 0;
+        }
+        h2 {
+            margin-bottom: 10px;
+            color: #555;
+        }
+        p {
+            margin: 8px 0;
+            color: #777;
+        }
+        ul {
+            padding-left: 20px;
+        }
+        li {
+            margin-bottom: 6px;
+        }
+        a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Welcome, {{ username }}</h1>
+        </header>
+        <main>
+            <h2>Profile Information</h2>
+            <p><strong>Username:</strong> {{ username }}</p>
+            <p><strong>Notes Uploaded:</strong> {{ notes|length }}</p>
+            <p><strong>Total Score:</strong> {{ score }}</p>
+            <p><strong>Rank:</strong> {{ rank }}</p>
+            <h2>Uploaded Files</h2>
+            <ul>
+                {% for note in notes %}
+                <li><a href="{{ url_for('download_uploaded_file', filename=note.filename) }}">{{ note.filename }}</a></li>
+                {% endfor %}
+            </ul>
+        </main>
+    </div>
+</body>
+</html>

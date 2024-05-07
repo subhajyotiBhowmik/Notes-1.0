@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Location Access Required</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Location Access Required</h1>
+        <p>This feature requires access to your location. Please grant access to your browser's location services to proceed.</p>
+        <button onclick="getLocation()">Grant Access</button>
+        <p id="locationError" style="color: red; display: none;">Error: Failed to get location. Please check your browser settings.</p>
+    </div>
+
+    <script>
+        function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showPosition, showError);
+            } else {
+                document.getElementById("locationError").style.display = "block";
+            }
+        }
+
+        function showPosition(position) {
+            const latitude = position.coords.latitude;
+            const longitude = position.coords.longitude;
+            window.location.href = `/nearby?tutors=true&latitude=${latitude}&longitude=${longitude}`;
+        }
+
+        function showError(error) {
+            document.getElementById("locationError").style.display = "block";
+        }
+    </script>
+</body>
+</html>
